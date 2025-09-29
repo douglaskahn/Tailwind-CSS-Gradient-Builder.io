@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Style Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="relative h-full overflow-hidden">
+
+    <!-- This is the base gradient layer. The 'base-gradient' class uses our custom CSS. -->
+    <div class="fixed inset-0 base-gradient"></div>
+
+    <!-- This is the second gradient layer, which is a transparent overlay. -->
+    <div class="fixed inset-0 overlay-gradient"></div>
+
+    <!-- The content container sits on top of the gradients. -->
+    <div class="relative z-10 flex flex-col items-center justify-center h-screen text-center text-white px-4">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">
+            Gradient<br>
+            Overlay<br>
+            Builder
+        </h1>
+        <p class="text-lg sm:text-xl max-w-2xl px-4 opacity-90 font-light">
+            Compare Tailwind, and Toggle to see:<br>
+            Hex Value<br>
+            RGB Value<br>
+            Get CSS code sample
+        </p>
+    </div>
+
+    <!--
+     * The control panel UI. It's a semi-transparent floating card
+     * on the right side of the screen with a higher z-index.
+     * The 'select-none' class prevents text selection on the control panel.
+     -->
+    <div
+        class="fixed top-4 right-4 z-20 w-80 max-w-[90%] bg-white/10 backdrop-blur-md rounded-xl shadow-lg p-6 select-none">
+        <h2 class="text-white text-xl font-bold mb-4 border-b border-white/20 pb-2">Gradient Controls</h2>
+
+        <!-- Tailwind Only Toggle -->
+        <div class="toggle-container">
+            <label class="toggle-label" for="tailwind-toggle">Tailwind Only</label>
+            <label class="toggle-switch">
+                <input type="checkbox" id="tailwind-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <!-- Base Gradient controls -->
+        <div id="base-controls" class="mb-6">
+            <h3 class="text-white font-semibold mb-2">Base Gradient</h3>
+            <div class="space-y-4">
+                <div class="color-group">
+                    <label class="color-label" for="base-from-color">From</label>
+                    <input type="color" id="base-from-color" class="color-input" value="#312e81">
+                    <div id="base-from-circle" class="tailwind-color-circle hidden" style="background-color: #312e81;"
+                        data-target="base-from"></div>
+                    <div class="ml-2 text-sm text-gray-300 flex-1 space-y-1">
+                        <input type="text" id="base-from-tailwind" class="text-input hidden" readonly>
+                        <input type="text" id="base-from-hex" class="text-input" value="#312e81">
+                        <input type="text" id="base-from-rgb" class="text-input" value="rgb(49, 46, 129)">
+                    </div>
+                </div>
+                <div class="color-group">
+                    <label class="color-label" for="base-via-color">Via</label>
+                    <input type="color" id="base-via-color" class="color-input" value="#581c87">
+                    <div id="base-via-circle" class="tailwind-color-circle hidden" style="background-color: #581c87;"
+                        data-target="base-via"></div>
+                    <div class="ml-2 text-sm text-gray-300 flex-1 space-y-1">
+                        <input type="text" id="base-via-tailwind" class="text-input hidden" readonly>
+                        <input type="text" id="base-via-hex" class="text-input" value="#581c87">
+                        <input type="text" id="base-via-rgb" class="text-input" value="rgb(88, 28, 135)">
+                    </div>
+                </div>
+                <div class="color-group">
+                    <label class="color-label" for="base-to-color">To</label>
+                    <input type="color" id="base-to-color" class="color-input" value="#9d174d">
+                    <div id="base-to-circle" class="tailwind-color-circle hidden" style="background-color: #9d174d;"
+                        data-target="base-to"></div>
+                    <div class="ml-2 text-sm text-gray-300 flex-1 space-y-1">
+                        <input type="text" id="base-to-tailwind" class="text-input hidden" readonly>
+                        <input type="text" id="base-to-hex" class="text-input" value="#9d174d">
+                        <input type="text" id="base-to-rgb" class="text-input" value="rgb(157, 23, 77)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overlay Gradient controls -->
+        <div id="overlay-controls" class="mb-6">
+            <h3 class="text-white font-semibold mb-2">Overlay Gradient</h3>
+            <div class="space-y-4">
+                <div class="color-group">
+                    <label class="color-label" for="overlay-from-color">From</label>
+                    <input type="color" id="overlay-from-color" class="color-input" value="#2563eb">
+                    <div id="overlay-from-circle" class="tailwind-color-circle hidden"
+                        style="background-color: #2563eb;" data-target="overlay-from"></div>
+                    <div class="ml-2 text-sm text-gray-300 flex-1 space-y-1">
+                        <input type="text" id="overlay-from-tailwind" class="text-input hidden" readonly>
+                        <input type="text" id="overlay-from-hex" class="text-input" value="#2563eb">
+                        <input type="text" id="overlay-from-rgb" class="text-input" value="rgba(37, 99, 235, 0.2)">
+                    </div>
+                </div>
+                <div class="color-group">
+                    <label class="color-label" for="overlay-to-color">To</label>
+                    <input type="color" id="overlay-to-color" class="color-input" value="#22d3ee">
+                    <div id="overlay-to-circle" class="tailwind-color-circle hidden" style="background-color: #22d3ee;"
+                        data-target="overlay-to"></div>
+                    <div class="ml-2 text-sm text-gray-300 flex-1 space-y-1">
+                        <input type="text" id="overlay-to-tailwind" class="text-input hidden" readonly>
+                        <input type="text" id="overlay-to-hex" class="text-input" value="#22d3ee">
+                        <input type="text" id="overlay-to-rgb" class="text-input" value="rgba(34, 211, 238, 0.2)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons for providing CSS and resetting colors -->
+        <div class="flex items-center gap-2 mt-4">
+            <button id="provide-css-button" class="control-button">Provide CSS</button>
+            <button id="reset-button" class="control-button">Reset Colors</button>
+        </div>
+    </div>
+
+    <!-- The Tailwind Color Palette Modal -->
+    <div id="palette-modal" class="modal-overlay hidden">
+        <div class="modal-content relative rounded-xl">
+            <button id="close-palette-modal" class="close-button">&times;</button>
+            <h2 class="text-xl font-bold mb-2 text-center">Tailwind Color Palette</h2>
+            <p class="text-gray-400 text-sm text-center">Select a color to update the gradient.</p>
+            <div id="color-grid" class="color-grid"></div>
+        </div>
+    </div>
+
+    <!-- The CSS Code Modal -->
+    <div id="css-modal" class="modal-overlay hidden">
+        <div class="modal-content relative rounded-xl">
+            <button id="close-css-modal" class="close-button">&times;</button>
+            <h2 class="text-xl font-bold mb-2">Generated CSS</h2>
+            <p class="text-gray-400 text-sm">Copy the code below to use this gradient in your project.</p>
+            <pre id="css-code-block" class="code-block"></pre>
+            <div class="flex justify-end gap-4 mt-4">
+                <button id="copy-code-button" class="copy-button">Copy Code</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

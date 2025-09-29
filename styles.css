@@ -1,0 +1,350 @@
+/*
+ * Gradient Builder Styles
+ * Organized into logical sections for maintainability
+ */
+
+/* ==========================================================================
+   Base Layout and Typography
+   ========================================================================== */
+
+/*
+ * This ensures the body takes up the full viewport and sets the font.
+ * The relative position is needed for the content and controls.
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.5s ease;
+}
+
+/* ==========================================================================
+   CSS Custom Properties (Variables)
+   ========================================================================== */
+
+/*
+ * We define the CSS custom properties (variables) here.
+ * We'll update these with JavaScript to change the gradient colors dynamically.
+ */
+:root {
+  --base-from: #312e81; /* indigo-900 */
+  --base-via: #581c87; /* purple-900 */
+  --base-to: #9d174d; /* pink-800 */
+  --overlay-from: rgba(37, 99, 235, 0.2); /* blue-600 */
+  --overlay-to: rgba(34, 211, 238, 0.2); /* cyan-400 */
+}
+
+/* ==========================================================================
+   Gradient Backgrounds
+   ========================================================================== */
+
+/*
+ * The base gradient layer uses the CSS variables.
+ * The 'linear-gradient' function is powerful and directly uses the variables.
+ */
+.base-gradient {
+  background-image: linear-gradient(
+    to bottom right,
+    var(--base-from),
+    var(--base-via),
+    var(--base-to)
+  );
+}
+
+/*
+ * The overlay gradient layer also uses CSS variables.
+ * We need to convert the hex color to RGBA to apply the 20% opacity.
+ * This conversion will be handled by JavaScript.
+ */
+.overlay-gradient {
+  background-image: linear-gradient(
+    to top right,
+    var(--overlay-from),
+    transparent,
+    var(--overlay-to)
+  );
+}
+
+/* ==========================================================================
+   Color Input Controls
+   ========================================================================== */
+
+/* Custom styles for the color input and label */
+.color-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.color-label {
+  width: 50px;
+  font-size: 0.875rem;
+  color: #d1d5db; /* gray-300 */
+}
+
+.color-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.color-input::-webkit-color-swatch {
+  border-radius: 9999px;
+  border: 2px solid #6b7280; /* gray-500 */
+}
+
+.color-input::-moz-color-swatch {
+  border-radius: 9999px;
+  border: 2px solid #6b7280; /* gray-500 */
+}
+
+.text-input {
+  background-color: #2d3748; /* dark gray */
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  color: #ffffff;
+  border: 1px solid #4a5568; /* a lighter dark gray */
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: #6b46c1; /* purple */
+}
+
+.tailwind-color-circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 2px solid #6b7280;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.tailwind-color-circle:hover {
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   Control Buttons
+   ========================================================================== */
+
+.control-button {
+  background-color: #6b46c1; /* purple-700 */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.control-button:hover {
+  background-color: #553a99; /* a darker purple */
+}
+
+/* ==========================================================================
+   Toggle Switch
+   ========================================================================== */
+
+/* Tailwind Only Toggle */
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.toggle-label {
+  color: #d1d5db; /* gray-300 */
+  font-size: 0.875rem;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #4b5563; /* gray-600 */
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #6366f1; /* indigo-500 */
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* ==========================================================================
+   Color Palette Grid
+   ========================================================================== */
+
+/* Styles for the color palette grid */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(32px, 1fr)
+  ); /* Adjusted to 32px for 20% smaller squares */
+  gap: 5px;
+  padding: 20px;
+  max-height: 4250px; /* Increased max height */
+  overflow-y: auto;
+}
+
+.color-swatch {
+  width: 100%;
+  padding-bottom: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.1s;
+  position: relative; /* Added for the tooltip */
+}
+
+.color-swatch:hover {
+  border-color: #fff;
+}
+
+/* Tooltip for showing Tailwind value on hover */
+.color-swatch::after {
+  content: attr(data-tailwind);
+  position: absolute;
+  bottom: 110%; /* Position above the swatch */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none; /* Allows clicks to pass through */
+}
+
+.color-swatch:hover::after {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Modal Styles
+   ========================================================================== */
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent; /* Removed dark overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-content {
+  background-color: #1e293b99; /* slate-800 */
+  color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  max-width: 90%;
+  width: 90%; /* Made modal wider */
+  max-height: 600px; /* Made modal taller */
+  height: 80%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.code-block {
+  background-color: #0f172a; /* slate-900 */
+  padding: 1rem;
+  border-radius: 0.375rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: monospace;
+  font-size: 0.875rem;
+  border: 1px solid #334155; /* slate-700 */
+  margin-top: 1rem;
+}
+
+.copy-button {
+  background-color: #3b82f6; /* blue-500 */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.copy-button:hover {
+  background-color: #2563eb; /* blue-600 */
+}
+
+.close-button {
+  background-color: transparent;
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  border: none;
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+.hidden {
+  display: none !important;
+}
